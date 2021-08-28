@@ -95,5 +95,5 @@ Foi utilizado o Framework Jest Nodejs para validar as requests, afim de teste ut
 ```
 ### LINK REPOSITÓRIO DO PROJETO:
 ```
-- gh repo clone IvanFloripa/banco-digital-api
+- gh repo clone IvanFloripa/bancodigitalnestjs
 ```
