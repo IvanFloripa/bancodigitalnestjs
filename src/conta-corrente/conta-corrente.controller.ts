@@ -33,5 +33,13 @@ export class ContaCorrenteController {
     ): Promise<any> {
         return this.contaCorrenteService.depositarContaCorrente(contaCorrenteDto,conta);
     }
+  
+  @Get(['saldo/:conta'])
+    async saldoContaCorrente(
+      @Param('conta') conta, 
+      @Body() contaCorrenteDto: ContaCorrenteDto
+    ): Promise<any> {
+        return this.contaCorrenteService.saldoContaCorrente(contaCorrenteDto,conta);
+    }
 
 }

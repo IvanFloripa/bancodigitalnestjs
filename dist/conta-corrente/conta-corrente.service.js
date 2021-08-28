@@ -29,6 +29,16 @@ let ContaCorrenteService = class ContaCorrenteService {
             throw new common_1.NotFoundException('Conta Corrente não encontrada');
         return contaCorrente;
     }
+    async saldoContaCorrente(contaCorrenteDto, conta) {
+        const contaCorrente = await this.contaCorrenteRepository.findOne({ where: { conta: conta } });
+        if (!contaCorrente)
+            throw new common_1.NotFoundException('Conta Corrente não encontrada');
+        return {
+            conta: conta,
+            saldo: contaCorrente.saldo,
+            message: 'Saldo Conta Corrente'
+        };
+    }
     async saldoSuficiente(valor, saldo) {
         if (valor > saldo) {
             throw new common_1.InternalServerErrorException('Usuário não possui saldo suficiente');

@@ -24,6 +24,18 @@ export class ContaCorrenteService {
     return contaCorrente;
   }
 
+  async saldoContaCorrente(contaCorrenteDto: ContaCorrenteDto,conta: string): Promise<Object> {
+    const contaCorrente = await this.contaCorrenteRepository.findOne({ where:
+      { conta: conta} });
+    if (!contaCorrente) throw new NotFoundException('Conta Corrente não encontrada');
+
+    return {
+      conta: conta,
+      saldo: contaCorrente.saldo,
+      message: 'Saldo Conta Corrente'
+    }
+  }
+
   /**
    * Verifica se o usuário possui saldo suficiente
    * @param valor 

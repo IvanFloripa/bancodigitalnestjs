@@ -34,6 +34,9 @@ let ContaCorrenteController = class ContaCorrenteController {
     async depositarContaCorrente(conta, contaCorrenteDto) {
         return this.contaCorrenteService.depositarContaCorrente(contaCorrenteDto, conta);
     }
+    async saldoContaCorrente(conta, contaCorrenteDto) {
+        return this.contaCorrenteService.saldoContaCorrente(contaCorrenteDto, conta);
+    }
 };
 __decorate([
     (0, common_1.Post)(),
@@ -58,6 +61,14 @@ __decorate([
     __metadata("design:paramtypes", [Object, conta_corrente_dto_1.ContaCorrenteDto]),
     __metadata("design:returntype", Promise)
 ], ContaCorrenteController.prototype, "depositarContaCorrente", null);
+__decorate([
+    (0, common_1.Get)(['saldo/:conta']),
+    __param(0, (0, common_1.Param)('conta')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, conta_corrente_dto_1.ContaCorrenteDto]),
+    __metadata("design:returntype", Promise)
+], ContaCorrenteController.prototype, "saldoContaCorrente", null);
 ContaCorrenteController = __decorate([
     (0, common_1.Controller)('conta-corrente'),
     __metadata("design:paramtypes", [conta_corrente_service_1.ContaCorrenteService])

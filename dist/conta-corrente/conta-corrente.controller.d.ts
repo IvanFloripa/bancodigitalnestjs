@@ -8,4 +8,5 @@ export declare class ContaCorrenteController {
     createContaCorrente(createContaCorrenteDto: CreateContaCorrenteDto): Promise<ReturnContaCorrenteDto>;
     sacarContaCorrente(conta: any, contaCorrenteDto: ContaCorrenteDto): Promise<any>;
     depositarContaCorrente(conta: any, contaCorrenteDto: ContaCorrenteDto): Promise<any>;
+    saldoContaCorrente(conta: any, contaCorrenteDto: ContaCorrenteDto): Promise<any>;
 }
