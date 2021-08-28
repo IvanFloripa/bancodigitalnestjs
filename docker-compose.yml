@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  postgres_db:
+    container_name: postgres_db
+    image: "postgres:12"
+    ports:
+      - '5431:5432'
+    expose:
+      - '5431'
+    networks:
+      - backend
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: 1234
+    volumes:
+      - db-data:/var/lib/postgresql/data
+networks:
+  backend:
+    driver: 'bridge'
+volumes:
+  db-data:        
