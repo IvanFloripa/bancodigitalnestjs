@@ -13,17 +13,8 @@ export class ContaCorrenteService {
   ) {}
   
   async createContaCorrente(createContaCorrenteDto: CreateContaCorrenteDto): Promise<ContaCorrente> {
-    // if (createUserDto.password != createContaCorrenteDto.passwordConfirmation) {
-    //   throw new UnprocessableEntityException('As senhas não conferem');
-    // } else {
       return this.contaCorrenteRepository.createContaCorrente(createContaCorrenteDto);
-    // }
   }
-
-  // async findAll(): Promise<ContaCorrente[]> {
-  //   const contaCorrente = this.contaCorrenteRepository.find();
-  //   return contaCorrente;
-  // }
 
   async findConta(conta: string): Promise<ContaCorrente> {
     const contaCorrente = await this.contaCorrenteRepository.findOne({ where:
@@ -33,33 +24,60 @@ export class ContaCorrenteService {
     return contaCorrente;
   }
 
-  async sacarContaCorrente(contaCorrenteDto: ContaCorrenteDto, conta: string): Promise<ContaCorrente> {
-    const contaCorrente = await this.findConta(conta);
-    const { valor, saldo } = contaCorrenteDto;
-    contaCorrente.saldo = saldo ? saldo : contaCorrente.saldo;
-    console.log(contaCorrente);
-    try {
-      await contaCorrente.save();
-      return contaCorrente;
-    } catch (error) {
-      console.log(error);
-
+  /**
+   * Verifica se o usuário possui saldo suficiente
+   * @param valor 
+   * @param saldo 
+   * @returns boolean
+   */
+   async saldoSuficiente (valor: number, saldo: number): Promise<boolean>{
+    if(valor > saldo){
       throw new InternalServerErrorException(
-        'Erro ao salvar os dados no banco de dados',
+        'Usuário não possui saldo suficiente',
       );
     }
+    return true;
+  }
+  async sacarContaCorrente(contaCorrenteDto: ContaCorrenteDto, conta: string): Promise<Object> {
+    const contaCorrente = await this.findConta(conta);
+    const { valor } = contaCorrenteDto;
+    let saldoBd = Number(contaCorrente.saldo);
+
+    if(this.saldoSuficiente(valor,saldoBd)){
+      let valorF = Number(valor);
+      contaCorrente.saldo = saldoBd ? saldoBd - valorF : valorF;
+      try {
+        await contaCorrente.save();
+        return {
+          conta: conta,
+          saldo: contaCorrente.saldo,
+          message: 'Saque Efetuado com Sucesso'
+        }
+      } catch (error) {
+        console.log(error);
+
+        throw new InternalServerErrorException(
+          'Erro ao salvar os dados no banco de dados',
+        );
+      }
+        
+    }    
   }
 
-  async depositarContaCorrente(contaCorrenteDto: ContaCorrenteDto, conta: string): Promise<ContaCorrente> {
+  async depositarContaCorrente(contaCorrenteDto: ContaCorrenteDto, conta: string): Promise<Object> {
     const contaCorrente = await this.findConta(conta);
-    const { valor, saldo } = contaCorrenteDto;
+    const { valor } = contaCorrenteDto;
     let saldoBd = Number(contaCorrente.saldo);
     let valorF = Number(valor);
     contaCorrente.saldo = saldoBd ? saldoBd + valorF : valorF;
     console.log(contaCorrente.saldo);
     try {
       await contaCorrente.save();
-      return contaCorrente;
+      return {
+        conta: conta,
+        saldo: contaCorrente.saldo,
+        message: 'Depósito Efetuado com Sucesso'
+      }
     } catch (error) {
       console.log(error);
 

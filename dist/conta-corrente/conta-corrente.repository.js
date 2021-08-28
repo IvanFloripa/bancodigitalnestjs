@@ -12,10 +12,9 @@ const conta_corrente_entity_1 = require("./conta-corrente.entity");
 const common_1 = require("@nestjs/common");
 let ContaCorrenteRepository = class ContaCorrenteRepository extends typeorm_1.Repository {
     async createContaCorrente(createContaCorrenteDto) {
-        const { conta, valor, saldo } = createContaCorrenteDto;
+        const { conta } = createContaCorrenteDto;
         const contaCorrente = this.create();
         contaCorrente.conta = conta;
-        contaCorrente.saldo = saldo;
         try {
             await contaCorrente.save();
             return contaCorrente;

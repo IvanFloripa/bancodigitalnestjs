@@ -7,6 +7,7 @@ export declare class ContaCorrenteService {
     constructor(contaCorrenteRepository: ContaCorrenteRepository);
     createContaCorrente(createContaCorrenteDto: CreateContaCorrenteDto): Promise<ContaCorrente>;
     findConta(conta: string): Promise<ContaCorrente>;
-    sacarContaCorrente(contaCorrenteDto: ContaCorrenteDto, conta: string): Promise<ContaCorrente>;
-    depositarContaCorrente(contaCorrenteDto: ContaCorrenteDto, conta: string): Promise<ContaCorrente>;
+    saldoSuficiente(valor: number, saldo: number): Promise<boolean>;
+    sacarContaCorrente(contaCorrenteDto: ContaCorrenteDto, conta: string): Promise<Object>;
+    depositarContaCorrente(contaCorrenteDto: ContaCorrenteDto, conta: string): Promise<Object>;
 }

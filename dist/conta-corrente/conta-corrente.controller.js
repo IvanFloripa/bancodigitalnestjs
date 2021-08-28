@@ -28,13 +28,6 @@ let ContaCorrenteController = class ContaCorrenteController {
             message: 'Conta Corrente Cadastrada com Sucesso',
         };
     }
-    async findConta(conta) {
-        const contaCorrente = await this.contaCorrenteService.findConta(conta);
-        return {
-            contaCorrente,
-            message: 'Conta Corrente não encontrado',
-        };
-    }
     async sacarContaCorrente(conta, contaCorrenteDto) {
         return this.contaCorrenteService.sacarContaCorrente(contaCorrenteDto, conta);
     }
@@ -49,13 +42,6 @@ __decorate([
     __metadata("design:paramtypes", [create_conta_corrente_dto_1.CreateContaCorrenteDto]),
     __metadata("design:returntype", Promise)
 ], ContaCorrenteController.prototype, "createContaCorrente", null);
-__decorate([
-    (0, common_1.Get)(['conta/:conta']),
-    __param(0, (0, common_1.Param)('conta')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], ContaCorrenteController.prototype, "findConta", null);
 __decorate([
     (0, common_1.Patch)(['sacar/:conta']),
     __param(0, (0, common_1.Param)('conta')),

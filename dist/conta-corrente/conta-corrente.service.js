@@ -29,30 +29,47 @@ let ContaCorrenteService = class ContaCorrenteService {
             throw new common_1.NotFoundException('Conta Corrente não encontrada');
         return contaCorrente;
     }
+    async saldoSuficiente(valor, saldo) {
+        if (valor > saldo) {
+            throw new common_1.InternalServerErrorException('Usuário não possui saldo suficiente');
+        }
+        return true;
+    }
     async sacarContaCorrente(contaCorrenteDto, conta) {
         const contaCorrente = await this.findConta(conta);
-        const { valor, saldo } = contaCorrenteDto;
-        contaCorrente.saldo = saldo ? saldo : contaCorrente.saldo;
-        console.log(contaCorrente);
-        try {
-            await contaCorrente.save();
-            return contaCorrente;
-        }
-        catch (error) {
-            console.log(error);
-            throw new common_1.InternalServerErrorException('Erro ao salvar os dados no banco de dados');
+        const { valor } = contaCorrenteDto;
+        let saldoBd = Number(contaCorrente.saldo);
+        if (this.saldoSuficiente(valor, saldoBd)) {
+            let valorF = Number(valor);
+            contaCorrente.saldo = saldoBd ? saldoBd - valorF : valorF;
+            try {
+                await contaCorrente.save();
+                return {
+                    conta: conta,
+                    saldo: contaCorrente.saldo,
+                    message: 'Saque Efetuado com Sucesso'
+                };
+            }
+            catch (error) {
+                console.log(error);
+                throw new common_1.InternalServerErrorException('Erro ao salvar os dados no banco de dados');
+            }
         }
     }
     async depositarContaCorrente(contaCorrenteDto, conta) {
         const contaCorrente = await this.findConta(conta);
-        const { valor, saldo } = contaCorrenteDto;
+        const { valor } = contaCorrenteDto;
         let saldoBd = Number(contaCorrente.saldo);
         let valorF = Number(valor);
         contaCorrente.saldo = saldoBd ? saldoBd + valorF : valorF;
         console.log(contaCorrente.saldo);
         try {
             await contaCorrente.save();
-            return contaCorrente;
+            return {
+                conta: conta,
+                saldo: contaCorrente.saldo,
+                message: 'Depósito Efetuado com Sucesso'
+            };
         }
         catch (error) {
             console.log(error);

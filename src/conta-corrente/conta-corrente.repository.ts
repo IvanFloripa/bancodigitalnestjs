@@ -11,11 +11,10 @@ export class ContaCorrenteRepository extends Repository<ContaCorrente> {
   async createContaCorrente(
     createContaCorrenteDto: CreateContaCorrenteDto,
   ): Promise<ContaCorrente> {
-    const { conta, valor, saldo } = createContaCorrenteDto;
+    const { conta } = createContaCorrenteDto;
 
     const contaCorrente = this.create();
     contaCorrente.conta = conta;
-    contaCorrente.saldo = saldo;
    
     try {
       await contaCorrente.save();
