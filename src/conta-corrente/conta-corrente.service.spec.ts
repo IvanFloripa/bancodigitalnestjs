@@ -3,6 +3,7 @@ import { ContaCorrenteRepository } from './../conta-corrente/conta-corrente.repo
 import { ContaCorrenteService } from './conta-corrente.service';
 import { ContaCorrenteDto } from './dtos/conta-corrente.dto';
 import { NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import { CreateContaCorrenteDto } from './dtos/create-conta-corrente.dto';
 
 const mockContaCorrenteRepository = () => ({
   createContaCorrente: jest.fn(),
@@ -33,6 +34,28 @@ describe('ContaCorrenteService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
     expect(contaCorrenteRepository).toBeDefined();
+  });
+
+  describe('createContaCorrente', () => {
+    let mockCreateConta: CreateContaCorrenteDto;
+
+    beforeEach(() => {
+      mockCreateConta = {
+        conta: 456789,
+        valor:1000,
+        saldo:1000
+      };
+    });
+
+    it('should create accounte', async () => {
+      contaCorrenteRepository.createUser.mockResolvedValue('mockConta');
+      const result = await service.createAdminUser(mockCreateConta);
+
+      expect(contaCorrenteRepository.createContaCorrente).toHaveBeenCalledWith(
+        mockCreateConta,
+      );
+      expect(result).toEqual('mockUser');
+    });
   });
 
   describe('sacarContaCorrente', () => {
