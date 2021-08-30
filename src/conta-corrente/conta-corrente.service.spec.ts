@@ -37,7 +37,7 @@ describe('ContaCorrenteService', () => {
 
   describe('sacarContaCorrente', () => {
     it('should return the found user', async () => {
-      contaCorrenteRepository.findOne.mockResolvedValue('mockUser');
+      contaCorrenteRepository.findOne.mockResolvedValue('mockConta');
       expect(contaCorrenteRepository.findOne).not.toHaveBeenCalled();
 
       const result = await service.findUserById('mockId');
