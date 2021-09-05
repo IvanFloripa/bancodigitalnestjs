@@ -93,7 +93,7 @@ JSON:
 
 Foi utilizado o Framework Jest Nodejs para validar as requests, afim de teste utilizar <code>npm run test:watch</code> dentro do diretório do projeto api este comando deve ser executado
 
-![Alt text](/../master/screenshots/test.png?raw=true "Optional Title")
+![Alt text](/../master/screenshots/test-jest.png?raw=true "Optional Title")
 
 ### LINK REPOSITÓRIO DO PROJETO:
 ```
