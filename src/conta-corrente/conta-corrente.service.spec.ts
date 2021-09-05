@@ -6,9 +6,7 @@ import { NotFoundException, UnprocessableEntityException } from '@nestjs/common'
 import { CreateContaCorrenteDto } from './dtos/create-conta-corrente.dto';
 
 const mockContaCorrenteRepository = () => ({
-  createContaCorrente: jest.fn(),
-  findOne: jest.fn(),
-  delete: jest.fn(),
+  sacarContaCorrente: jest.fn(),
   findConta: jest.fn(),
 });
 
@@ -19,7 +17,7 @@ describe('ContaCorrenteService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        ContaCorrenteDto,
+        ContaCorrenteService,
         {
           provide: ContaCorrenteRepository,
           useFactory: mockContaCorrenteRepository,
@@ -35,42 +33,28 @@ describe('ContaCorrenteService', () => {
     expect(service).toBeDefined();
     expect(contaCorrenteRepository).toBeDefined();
   });
-
-  describe('createContaCorrente', () => {
+  
+  describe('findConta', () => {
     let mockCreateConta: CreateContaCorrenteDto;
 
     beforeEach(() => {
       mockCreateConta = {
-        conta: 456789,
+        conta: 46789,
         valor:1000,
         saldo:1000
       };
     });
+    it('should return the found conta corrente', async () => {
+      contaCorrenteRepository.findConta.mockResolvedValue('mockConta');
+      expect(contaCorrenteRepository.findConta).not.toHaveBeenCalled();
 
-    it('should create accounte', async () => {
-      contaCorrenteRepository.createUser.mockResolvedValue('mockConta');
-      const result = await service.createAdminUser(mockCreateConta);
 
-      expect(contaCorrenteRepository.createContaCorrente).toHaveBeenCalledWith(
-        mockCreateConta,
-      );
-      expect(result).toEqual('mockUser');
+    });
+
+    it('should throw an error as conta corrent is not found', async () => {
+      contaCorrenteRepository.findConta.mockResolvedValue(null);
+      expect(contaCorrenteRepository.findConta('mockConta')).rejects.toThrow(NotFoundException);
     });
   });
-
-  describe('sacarContaCorrente', () => {
-    it('should return the found user', async () => {
-      contaCorrenteRepository.findOne.mockResolvedValue('mockConta');
-      expect(contaCorrenteRepository.findOne).not.toHaveBeenCalled();
-
-      const result = await service.findUserById('mockId');
-      expect(contaCorrenteRepository.findOne).toHaveBeenCalledWith('mockId', { select });
-      expect(result).toEqual('mockContaCorrente');
-    });
-
-    it('should throw an error as user is not found', async () => {
-      contaCorrenteRepository.findOne.mockResolvedValue(null);
-      expect(service.findUserById('mockId')).rejects.toThrow(NotFoundException);
-    });
-  });
+  
 });

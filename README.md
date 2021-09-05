@@ -35,7 +35,8 @@ Postgresql, as credenciais do banco de dados ficam em <code>docker-compose.yml</
 ![Alt text](/../master/screenshots/config_banco.png?raw=true "Optional Title")
 
 ###Executar o Projeto
-Para executar o container do Projeto basta executar o comando <code>docker-compose up</code>
+Para executar o container do Banco de Dados do Projeto basta executar o comando <code>docker-compose up</code>
+Após a execução do banco de dados pode executar o comando para iniciar o Projeto NestJs <code>npm run start:dev</code>
 
 ###Teste de Requisições
 Utilizado o Postman para executar as requisições do Projeto
@@ -90,8 +91,10 @@ JSON:
 ```
 ### Teste Unitário
 
-Foi utilizado o Framework Jest Nodejs para validar as requests, afim de teste utilizar <code>npm test</code> dentro do container da api este comando deve ser executado
-```
+Foi utilizado o Framework Jest Nodejs para validar as requests, afim de teste utilizar <code>npm run test:watch</code> dentro do diretório do projeto api este comando deve ser executado
+
+![Alt text](/../master/screenshots/test.png?raw=true "Optional Title")
+
 ### LINK REPOSITÓRIO DO PROJETO:
 ```
 - gh repo clone IvanFloripa/bancodigitalnestjs
